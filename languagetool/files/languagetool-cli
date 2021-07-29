@@ -1,0 +1,13 @@
+#!/usr/local/bin/bash
+
+declare -a argv=("$@")
+
+JAVA_BIN=/usr/local/bin/java
+
+CLASS_PATH=/usr/local/share/languagetool
+for name in /usr/local/share/java/classes/languagetool/*.jar ; do
+  CLASS_PATH=$CLASS_PATH:$name
+done
+
+$JAVA_BIN -cp $CLASS_PATH "org.languagetool.commandline.Main" "${argv[@]}"  \
+  | sed "s/java -jar languagetool-commandline.jar/languagetool-cli/"
